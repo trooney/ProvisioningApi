@@ -1,0 +1,24 @@
+{
+    "name": "nrc/XmlRemote",
+	"description": "Universal XML class for Bridgewater AAA, StarACS and Feature Server",
+	"authors": [
+		{
+			"name": "Tyler Rooney",
+			"email": "tyler@tylerrooney.ca"
+		}
+	],
+    "config": {
+		"bin-dir": "bin/",
+		"vendor-dir": "vendor"
+    },
+
+    "require": {
+        "UnionOfRAD/lithium": "dev-master"
+    },
+	"autoload":{
+		"psr-0":{
+			"NRC":"library",
+			"lithium":"vendor/UnionOfRad"
+		}
+	}
+}

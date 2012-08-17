@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<soap:Body>
+		<FooResponse xmlns="http://www.friendly-tech.com">
+			<FooResult>
+				<result xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.friendly-tech.com">
+					<response_code>100</response_code>
+					<Foo>bar</Foo>
+				</result>
+			</FooResult>
+		</FooResponse>
+	</soap:Body>
+</soap:Envelope>

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<response version="1.2">
+	<target name="UserAPI" operation="createUser">
+		<result>
+			<user>
+				<id>6413</id>
+			</user>
+		</result>
+	</target>
+</response>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Response Status="ERROR" RequestId="12345">
+	<Error Description="NODATAFOUND" Element="14415400911" Message="error"/>
+</Response>

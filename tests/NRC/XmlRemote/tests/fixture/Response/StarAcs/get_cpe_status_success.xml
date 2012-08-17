@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+	<soap:Body>
+		<FTCPEStatusResponse xmlns="http://www.friendly-tech.com">
+			<FTCPEStatusResult>
+				<result xmlns="http://www.friendly-tech.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<response_code>100</response_code>
+					<parameters>
+						<parameter>
+							<name>foo</name>
+							<value>bar</value>
+						</parameter>
+					</parameters>
+				</result>
+			</FTCPEStatusResult>
+		</FTCPEStatusResponse>
+	</soap:Body>
+</soap:Envelope>

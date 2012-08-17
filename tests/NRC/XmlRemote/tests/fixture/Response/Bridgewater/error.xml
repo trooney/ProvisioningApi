@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<response version="1.2">
+	<target name="Foo" operation="bar">
+		<error>
+			<code>FOO-007</code>
+			<message>error</message>
+		</error>
+	</target>
+</response>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+	<soap:Body>
+		<FTFindDeviceByValueResponse xmlns="http://www.friendly-tech.com">
+			<FTFindDeviceByValueResult>
+				<result xmlns="http://www.friendly-tech.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<response_code>100</response_code>
+					<devices>
+						<device>
+							<id>123</id>
+							<serial>1234567</serial>
+						</device>
+					</devices>
+				</result>
+			</FTFindDeviceByValueResult>
+		</FTFindDeviceByValueResponse>
+	</soap:Body>
+</soap:Envelope>

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<response version="1.2">
+	<target name="OrganizationAPI" operation="getOrganization">
+		<result>
+			<organization>
+				<id>5</id>
+				<name>/BWS</name>
+				<status>active</status>
+				<profile-set>
+					<profile>
+						<id>6</id>
+						<name>RadiusQoSConnectionService</name>
+						<service>
+							<name>RadiusQoSConnectionService</name>
+							<version>1</version>
+						</service>
+						<attribute name="name1">
+							<value segment="segment">value1</value>
+						</attribute>
+					</profile>
+				</profile-set>
+			</organization>
+		</result>
+	</target>
+</response>

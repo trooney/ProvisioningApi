@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<response version="1.2">
+	<target name="UserAPI" operation="getUserProfileSet">
+		<result>
+			<user-profile-set>
+				<id>1712</id>
+				<name>testUPS1</name>
+			</user-profile-set>
+		</result>
+	</target>
+</response>
