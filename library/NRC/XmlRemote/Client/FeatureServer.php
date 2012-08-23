@@ -33,7 +33,7 @@ class FeatureServer extends \NRC\XmlRemote\Client {
 	 * @var array
 	 */
 	protected $_classes = array(
-		'connection' => 'XmlRemote\Socket\PersistentStream',
+		'connection' => 'NRC\XmlRemote\Socket\PersistentStream',
 		'request' => 'NRC\XmlRemote\Request\FeatureServer',
 		'response' => 'NRC\XmlRemote\Response\FeatureServer'
 	);
