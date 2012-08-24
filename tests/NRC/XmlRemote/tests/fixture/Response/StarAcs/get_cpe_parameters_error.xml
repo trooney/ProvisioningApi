@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+	<soap:Body>
+		<FTGetDeviceParametersResponse xmlns="http://www.friendly-tech.com">
+			<FTGetDeviceParametersResult>
+				<result xmlns="http://www.friendly-tech.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+					<response_code>200</response_code>
+					<parameters>
+						<parameter>
+							<name>foo.bar</name>
+							<errormessage>There is error at arraynames[1]: Parameter "foo.bar" not exist at device 12345</errormessage>
+						</parameter>
+						<parameter>
+							<name>baz.quz</name>
+							<errormessage>There is error at arraynames[2]: Parameter "baz.qux" not exist at device 12345</errormessage>
+						</parameter>
+					</parameters>
+				</result>
+			</FTGetDeviceParametersResult>
+		</FTGetDeviceParametersResponse>
+	</soap:Body>
+</soap:Envelope>

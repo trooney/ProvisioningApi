@@ -52,4 +52,11 @@ class StarAcsTest extends \NRC\XmlRemote\tests\unit\UnitTestCase {
 		$this->assertEquals($expected, $response->to('array'));
 	}
 
+	public function testInvalidParametersErrorMessages() {
+		$response = $this->getResponse('StarAcs', 'get_cpe_parameters_error');
+
+		$expected = 200;
+		$this->assertEquals($expected, $response->status['code']);
+	}
+
 }

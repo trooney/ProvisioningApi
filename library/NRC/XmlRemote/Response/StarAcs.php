@@ -32,8 +32,24 @@ class StarAcs extends \NRC\XmlRemote\Response {
 	protected function _decode(\SimpleXMLElement $xml) {
 
 		if ((string)$xml->response_code == 200) {
-			$code = (string)$xml->error_code;
+
+			$code = (string) $xml->error_code;
 			$message = (string)$xml->message;
+
+			if (!$code) {
+
+				$code = $xml->response_code;
+				$message = 'Unknown error';
+
+				$xml->registerXPathNamespace('f', "http://www.friendly-tech.com");
+				if ($xml->xpath('//f:errormessage')) {
+					$message = '';
+					foreach ($xml->xpath('//f:errormessage') as $xmlEl) {
+						$message .= (string) $xmlEl . ' ';
+					}
+
+				}
+			}
 
 			$this->status = array(
 				'code' => (string)$code,
