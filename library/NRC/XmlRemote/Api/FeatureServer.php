@@ -12,17 +12,24 @@ use NRC\XmlRemote\Exceptions\ClientException;
 class FeatureServer extends \NRC\XmlRemote\Api {
 
     static $_CLIENT_HSS = 'hss';
-    static $_CLIENT_FEATURE = 'hss';
+    static $_CLIENT_FEATURE = 'feature';
 
     protected $_classes = array(
         'client' => 'NRC\XmlRemote\Client\FeatureServer',
     );
 
+    /**
+     * FeatureServer handles two client connections
+     *      feature - Connection to the feature data port
+     *      hss - Connection to the hss data port
+     *
+     * @param array $config
+     */
     public function __construct(array $config = array()) {
         $defaults = array (
             'clients' => array(
-                'feature' => array('port' => 7857),
-                'hss' => array('port' => 7856),
+                'feature' => array('port' => 7856),
+                'hss' => array('port' => 7857),
             )
         );
 
@@ -44,17 +51,18 @@ class FeatureServer extends \NRC\XmlRemote\Api {
         parent::__construct($config);
     }
 
-	public function login($client, $username, $password, $role) {
-
+	public function login($client) {
 		if ($this->_client($client)->requestId) {
 			return null;
 		}
 
+        $config = $this->_client($client)->_config;
+
 		$params = array(
 			'Authentication' => array(
-				'ClientName' => $username,
-				'Password' => $password,
-				'Role' => $role,
+				'ClientName' => $config['username'],
+				'Password' => $config['password'],
+				'Role' => $config['role'],
 			)
 		);
 
@@ -71,10 +79,16 @@ class FeatureServer extends \NRC\XmlRemote\Api {
 		return $response;
 	}
 
-	public function logoff($client, $username) {
+	public function logoff($client) {
+        if ($this->_client($client)->requestId) {
+            return null;
+        }
+
+        $config = $this->_client($client)->_config;
+
 		$params = array(
 			'Authentication' => array(
-				'ClientName' => $username,
+				'ClientName' => $config['username'],
 			)
 		);
 

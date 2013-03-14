@@ -42,7 +42,7 @@ FeatureServer
 // Simple configuration
 $api = new FeatureServer(array(
     'host' => '127.0.0.1',
-    'login' => 'login',
+    'username' => 'login',
     'password' => 'password',
     'role' => 'role'
 ));
@@ -52,13 +52,13 @@ $api = new FeatureServer(
     'clients' => array(
         'feature' => array(
              'host' => '127.0.0.1',
-             'login' => 'login',
+             'username' => 'login',
              'password' => 'password',
              'role' => 'role'
          ),
          'hss' => array(
           'host' => '127.0.0.1',
-          'login' => 'login',
+          'username' => 'login',
           'password' => 'password',
           'role' => 'role'
       )
