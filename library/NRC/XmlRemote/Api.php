@@ -11,7 +11,9 @@ use NRC\XmlRemote\Exceptions\ApiException;
  */
 class Api extends \lithium\core\Object {
 
-	protected $_classes = array();
+	protected $_classes = array(
+        'client' => '\stdClass'
+    );
 
 	protected $_clients = array();
 
@@ -32,9 +34,8 @@ class Api extends \lithium\core\Object {
 			foreach ($config['clients'] as $name => $client) {
 				if (is_object($client)) {
 					$this->_clients[$name] = $client;
-				}
-
-				unset($config['clients'][$name]);
+                    unset($config['clients'][$name]);
+                }
 			}
 		}
 
@@ -57,11 +58,10 @@ class Api extends \lithium\core\Object {
 		}
 
 		if (!isset($options['clients'])) {
-			$config = $options;
-			$options['client'] = array('default' => $options);
+			$options['clients'] = array('default' => $options);
 		}
 
-		foreach ($options['client'] as $name => $_options) {
+		foreach ($options['clients'] as $name => $_options) {
 
 			$class = null;
 
@@ -73,9 +73,8 @@ class Api extends \lithium\core\Object {
 				$class = $classes['clients'][$name];
 			}
 
-
 			if (!$class) {
-				throw new ApiException("No client class defined for client {$name}");
+				throw new ApiException("No class defined for client {$name}");
 			}
 
 			$this->_clients[$name] = $this->_instance($class, $_options);

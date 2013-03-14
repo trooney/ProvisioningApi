@@ -15,6 +15,7 @@ class FeatureServer extends \NRC\XmlRemote\Client {
 	 * @var null
 	 */
 	public $role = null;
+
 	/**
 	 * @var int
 	 */
@@ -75,7 +76,12 @@ class FeatureServer extends \NRC\XmlRemote\Client {
 		return (bool)$this->_connection->open();
 	}
 
-	public function _request($method, array $data = array()) {
+    /**
+     * @param $method
+     * @param array $data
+     * @return \NRC\XmlRemote\Request\FeatureServer
+     */
+    public function _request($method, array $data = array()) {
 		$defaults = array(
 			'requestId' => $this->requestId
 		);
@@ -96,6 +102,7 @@ class FeatureServer extends \NRC\XmlRemote\Client {
 
 		// Don't forget the return!
 		$this->_connection->write(array('body' => (string)$request . chr(10)));
+
 		$response = $this->_connection->readUntil('</Response>');
 
 		$this->_lastRequest = (string)$request;

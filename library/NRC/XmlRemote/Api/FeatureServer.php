@@ -11,67 +11,130 @@ use NRC\XmlRemote\Exceptions\ClientException;
  */
 class FeatureServer extends \NRC\XmlRemote\Api {
 
-	public function login($clientName, $password, $role) {
-		if ($this->requestId) {
+    static $_CLIENT_HSS = 'hss';
+    static $_CLIENT_FEATURE = 'hss';
+
+    protected $_classes = array(
+        'client' => 'NRC\XmlRemote\Client\FeatureServer',
+    );
+
+    public function __construct(array $config = array()) {
+        $defaults = array (
+            'clients' => array(
+                'feature' => array('port' => 7857),
+                'hss' => array('port' => 7856),
+            )
+        );
+
+        if (!isset($config['client']) && !isset($config['clients'])) {
+            $config['client'] = $config;
+        }
+
+
+        if (isset($config['client'])) {
+            foreach ($defaults['clients'] as $_client => $_config) {
+                $config['clients'][$_client] = $config['client'];
+            }
+
+            unset($config['client']);
+        }
+
+        $config = array_replace_recursive($defaults, $config);
+
+        parent::__construct($config);
+    }
+
+	public function login($client, $username, $password, $role) {
+
+		if ($this->_client($client)->requestId) {
 			return null;
 		}
 
 		$params = array(
 			'Authentication' => array(
-				'ApiName' => $clientName,
+				'ClientName' => $username,
 				'Password' => $password,
 				'Role' => $role,
 			)
 		);
 
 		// MANDATORY
-		$this->requestId = rand(1000, 9999);
+		$this->_client($client)->requestId = rand(1000, 9999);
 
-		$response = $this->request('LOGIN', $params);
+		$response = $this->_client($client)->request('LOGIN', $params);
 
 		if (!$response->success()) {
-			throw new ClientException('FeatureServer: Authentication failed.');
+            throw new ClientException('FeatureServer: Client "' . $client . '" failed to authenticate.');
 		}
+
 
 		return $response;
 	}
 
-	public function logoff($clientName) {
+	public function logoff($client, $username) {
 		$params = array(
 			'Authentication' => array(
-				'ApiName' => $clientName,
+				'ClientName' => $username,
 			)
 		);
 
-		return $this->request('LOGOFF', $params);
+		return $this->_client($client)->request('LOGOFF', $params);
 	}
 
-	public function getServiceListByUserId($pubUserId) {
-		$params = array(
-			'ServiceList' => array(
-				'PubUserId' => $pubUserId,
-			)
-		);
+    public function getHssPublicId($puidUser)
+    {
+        $params = array(
+            'PublicId' => array(
+                'PuidUser' => $puidUser,
+            )
+        );
 
-		return $this->request('READ', $params);
-	}
+        $response = $this->_client(self::$_CLIENT_HSS)->request('READ', $params);
 
-	public function getRegistrationDataByUserId($pubUserId) {
+        print($response->body) . "\n\n";
+
+        return $response;
+    }
+
+	public function getHssRegistrationData($puidUser) {
 		$params = array(
 			'RegistrationData' => array(
-				'PubUserId' => $pubUserId,
+				'PuidUser' => $puidUser,
 			)
 		);
 
-		return $this->request('READ', $params);
+        $response = $this->_client(self::$_CLIENT_HSS)->request('READ', $params);
+
+        print($response->body) . "\n\n";
+
+        return $response;
 	}
 
-	public function getAllPartyDetails() {
+	public function getFeatureAllServiceList() {
 		$params = array(
-			'PartyId' => null,
+			'ServiceList' => array(
+                'PubUserId' => ''
+            )
 		);
 
-		return $this->request('READALL', $params);
+		$response = $this->_client(self::$_CLIENT_FEATURE)->request('READALL', $params);
+
+        return $response;
 	}
+
+    public function getFeatureServiceList($puidUser)
+    {
+        $params = array(
+            'ServiceList' => array(
+                'PubUserId' => $puidUser
+            )
+        );
+
+        $response = $this->_client(self::$_CLIENT_FEATURE)->request('READ', $params);
+
+        print($response->body) . "\n\n";
+
+        return $response;
+    }
 
 }

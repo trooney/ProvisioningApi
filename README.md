@@ -34,3 +34,33 @@ $bridgewaterApi->createUser('username', 'login', 'password', 'profile', 'example
 $bridgewaterApi->updateUserProfile('login', 'profile2');
 
 ```
+
+
+FeatureServer
+---------------------
+
+// Simple configuration
+$api = new FeatureServer(array(
+    'host' => '127.0.0.1',
+    'login' => 'login',
+    'password' => 'password',
+    'role' => 'role'
+));
+
+// Explicit configuration of FEATURE and HSS clients
+$api = new FeatureServer(
+    'clients' => array(
+        'feature' => array(
+             'host' => '127.0.0.1',
+             'login' => 'login',
+             'password' => 'password',
+             'role' => 'role'
+         ),
+         'hss' => array(
+          'host' => '127.0.0.1',
+          'login' => 'login',
+          'password' => 'password',
+          'role' => 'role'
+      )
+    )
+);
