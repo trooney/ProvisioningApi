@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Response Status="ERROR" RequestId="123">
+    <Error Description="NODATAFOUND" Element="RegistrationData" Message="Public ID sip:+14415555555 not found in RLHSS_PUID_PROFILE"/>
+</Response>

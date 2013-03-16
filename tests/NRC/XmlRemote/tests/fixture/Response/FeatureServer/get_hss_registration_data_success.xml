@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Response Status="OKAY" RequestId="123">
+    <RegistrationData>
+        <PuidUser>sip:+14415555555</PuidUser>
+        <RegStatus>REGISTERED</RegStatus>
+        <ScscfName>sip:scsf-stdn.imsgroup0-000.fs1.sip.example.com:5060</ScscfName>
+    </RegistrationData>
+</Response>

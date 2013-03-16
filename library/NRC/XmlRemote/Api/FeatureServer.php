@@ -2,6 +2,7 @@
 
 namespace NRC\XmlRemote\Api;
 
+use NRC\XmlRemote\Exceptions\ApiException;
 use NRC\XmlRemote\Exceptions\ClientException;
 
 /**
@@ -119,22 +120,32 @@ class FeatureServer extends \NRC\XmlRemote\Api {
 
         $response = $this->_client(self::$_CLIENT_HSS)->request('READ', $params);
 
+        if (!$response->success()) {
+            throw new ApiException($response->getStatus());
+        }
+
+        var_dump($response->body);
+        return $response->to('array');
+	}
+
+    public function getFeatureParty($partyId)
+    {
+        $params = array(
+            'Party' => array(
+                'PartyId' => $partyId
+            )
+        );
+
+        $response = $this->_client(self::$_CLIENT_FEATURE)->request('READ', $params);
+
+        if (!$response->success()) {
+            throw new ApiException($response->getStatus());
+        }
+
         print($response->body) . "\n\n";
 
-        return $response;
-	}
-
-	public function getFeatureAllServiceList() {
-		$params = array(
-			'ServiceList' => array(
-                'PubUserId' => ''
-            )
-		);
-
-		$response = $this->_client(self::$_CLIENT_FEATURE)->request('READALL', $params);
-
-        return $response;
-	}
+        return $response->to('array');
+    }
 
     public function getFeatureServiceList($puidUser)
     {
@@ -146,9 +157,13 @@ class FeatureServer extends \NRC\XmlRemote\Api {
 
         $response = $this->_client(self::$_CLIENT_FEATURE)->request('READ', $params);
 
+        if (!$response->success()) {
+            throw new ApiException($response->getStatus());
+        }
+
         print($response->body) . "\n\n";
 
-        return $response;
+        return $response->to('array');
     }
 
 }
