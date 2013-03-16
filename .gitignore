@@ -1,5 +1,6 @@
 build/*
 vendor/
+libraries/
 composer.lock
 composer.phar
 phpunit.xml
