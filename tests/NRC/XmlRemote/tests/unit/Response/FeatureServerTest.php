@@ -39,7 +39,7 @@ class FeatureServerTest extends \NRC\XmlRemote\tests\unit\UnitTestCase {
 
 		$this->assertFalse($response->success());
 
-		$expected = array('code' => 'NODATAFOUND', 'message' => 'error');
+		$expected = array('code' => 'ERRORTYPE', 'message' => 'error');
 		$this->assertEquals($expected, $response->status);
 	}
 
