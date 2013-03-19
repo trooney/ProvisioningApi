@@ -1,19 +1,27 @@
-XML Remote
-==========
+Provisioning API
+=================
 
-Unified XML interface for Bridgewater AAA, StarACS and Lucent Feature Server interfaces. Uses Lithium PHP framework.
+Unified provisioning interface for Bridgewater AAA, StarACS and Lucent Feature Server interfaces. Uses Lithium PHP framework.
 
 
-Example
--------
+Autoloading
+-----------
+
+Composer handles the creation of this project's autoloader.
 
 ```php
 <?php
-require_once __DIR__ . '/../tests/autoload.php';
+// When in the project root
+require_once __DIR__ . '/../libraries/autoload.php';
+```
 
-use NRC\XmlRemote\Api\Bridgewater;
-use NRC\XmlRemote\Api\StarAcs;
-use NRC\XmlRemote\Exceptions\ApiException;
+
+Bridgewater
+-----------
+
+```php
+<?php
+use NRC\ProvisioningApi\Api\Bridgewater;
 
 // Create API Object
 $api = new Bridgewater(array(
@@ -38,6 +46,9 @@ $bridgewaterApi->updateUserProfile('login', 'profile2');
 
 FeatureServer
 ---------------------
+```php
+<?php
+use NRC\ProvisioningApi\Api\FeatureServer;
 
 // Simple configuration
 $api = new FeatureServer(array(
@@ -64,3 +75,4 @@ $api = new FeatureServer(
       )
     )
 );
+```

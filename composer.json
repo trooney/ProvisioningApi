@@ -1,6 +1,6 @@
 {
-    "name": "nrc/xml-remote",
-	"description": "Universal XML class for Bridgewater AAA, StarACS and Feature Server",
+    "name": "nrc/provisioning-api",
+	"description": "Provisioning for Bridgewater AAA, StarACS and Feature Server",
 	"authors": [
 		{
 			"name": "Tyler Rooney",
@@ -13,6 +13,7 @@
     },
 
     "require": {
+        "php": ">=5.3.3",
         "composer/installers": "dev-master",
         "UnionOfRAD/lithium": "dev-master"
     },

@@ -7,8 +7,8 @@
          timeoutForSmallTests="5">
 
 	<testsuites>
-		<testsuite name="XmlRemoteUnitTests">
-			<directory suffix="Test.php">./tests/NRC/XmlRemote/tests/unit</directory>
+		<testsuite name="ProvisioningApiUnitTests">
+			<directory suffix="Test.php">./tests/NRC/ProvisioningApi/tests/unit</directory>
 		</testsuite>
 	</testsuites>
 
