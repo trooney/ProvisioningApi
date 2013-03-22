@@ -96,6 +96,10 @@ class FeatureServer extends \NRC\ProvisioningApi\Api {
 		return $this->_client($client)->request('LOGOFF', $params);
 	}
 
+    /**
+     * @param $puidUser +14415401234
+     * @return array|mixed|null|\SimpleXMLElement|string
+     */
     public function getHssPublicId($puidUser)
     {
         $params = array(
@@ -109,7 +113,12 @@ class FeatureServer extends \NRC\ProvisioningApi\Api {
         return $response->to('array');
     }
 
-	public function getHssRegistrationData($puidUser) {
+    /**
+     * @param $puidUser sip:+14415401234
+     * @return array|mixed|null|\SimpleXMLElement|string
+     * @throws \NRC\ProvisioningApi\Exceptions\ApiException
+     */
+    public function getHssRegistrationData($puidUser) {
 		$params = array(
 			'RegistrationData' => array(
 				'PuidUser' => $puidUser,
@@ -125,6 +134,11 @@ class FeatureServer extends \NRC\ProvisioningApi\Api {
         return $response->to('array');
 	}
 
+    /**
+     * @param $partyId 4415410786
+     * @return array|mixed|null|\SimpleXMLElement|string
+     * @throws \NRC\ProvisioningApi\Exceptions\ApiException
+     */
     public function getFeatureParty($partyId)
     {
         $params = array(
@@ -142,6 +156,11 @@ class FeatureServer extends \NRC\ProvisioningApi\Api {
         return $response->to('array');
     }
 
+    /**
+     * @param $puidUser sip:+14415401234
+     * @return array|mixed|null|\SimpleXMLElement|string
+     * @throws \NRC\ProvisioningApi\Exceptions\ApiException
+     */
     public function getFeatureServiceList($puidUser)
     {
         $params = array(
