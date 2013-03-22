@@ -2,8 +2,10 @@
 
 namespace NRC\ProvisioningApi\Api;
 
+use NRC\ProvisioningApi\Client;
 use NRC\ProvisioningApi\Exceptions\ApiException;
 use NRC\ProvisioningApi\Exceptions\ClientException;
+
 
 /**
  * FeatureServer
@@ -18,6 +20,8 @@ class FeatureServer extends \NRC\ProvisioningApi\Api {
     protected $_classes = array(
         'client' => 'NRC\ProvisioningApi\Client\FeatureServer',
     );
+
+    protected $_returnType = 'array';
 
     /**
      * FeatureServer handles two client connections
@@ -98,7 +102,7 @@ class FeatureServer extends \NRC\ProvisioningApi\Api {
 
     /**
      * @param $puidUser +14415401234
-     * @return array|mixed|null|\SimpleXMLElement|string
+     * @return mixed
      */
     public function getHssPublicId($puidUser)
     {
@@ -108,14 +112,12 @@ class FeatureServer extends \NRC\ProvisioningApi\Api {
             )
         );
 
-        $response = $this->_client(self::$_CLIENT_HSS)->request('READ', $params);
-
-        return $response->to('array');
+        return $this->_request($this->_client(self::$_CLIENT_HSS), 'READ', $params);
     }
 
     /**
      * @param $puidUser sip:+14415401234
-     * @return array|mixed|null|\SimpleXMLElement|string
+     * @return mixed
      * @throws \NRC\ProvisioningApi\Exceptions\ApiException
      */
     public function getHssRegistrationData($puidUser) {
@@ -125,18 +127,12 @@ class FeatureServer extends \NRC\ProvisioningApi\Api {
 			)
 		);
 
-        $response = $this->_client(self::$_CLIENT_HSS)->request('READ', $params);
-
-        if (!$response->success()) {
-            throw new ApiException($response->getStatus());
-        }
-
-        return $response->to('array');
+        return $this->_request($this->_client(self::$_CLIENT_HSS), 'READ', $params);
 	}
 
     /**
      * @param $partyId 4415410786
-     * @return array|mixed|null|\SimpleXMLElement|string
+     * @return mixed
      * @throws \NRC\ProvisioningApi\Exceptions\ApiException
      */
     public function getFeatureParty($partyId)
@@ -147,18 +143,12 @@ class FeatureServer extends \NRC\ProvisioningApi\Api {
             )
         );
 
-        $response = $this->_client(self::$_CLIENT_FEATURE)->request('READ', $params);
-
-        if (!$response->success()) {
-            throw new ApiException($response->getStatus());
-        }
-
-        return $response->to('array');
+        return $this->_request($this->_client(self::$_CLIENT_FEATURE), 'READ', $params);
     }
 
     /**
      * @param $puidUser sip:+14415401234
-     * @return array|mixed|null|\SimpleXMLElement|string
+     * @return mixed
      * @throws \NRC\ProvisioningApi\Exceptions\ApiException
      */
     public function getFeatureServiceList($puidUser)
@@ -169,13 +159,7 @@ class FeatureServer extends \NRC\ProvisioningApi\Api {
             )
         );
 
-        $response = $this->_client(self::$_CLIENT_FEATURE)->request('READ', $params);
-
-        if (!$response->success()) {
-            throw new ApiException($response->getStatus());
-        }
-
-        return $response->to('array');
+        return $this->_request($this->_client(self::$_CLIENT_FEATURE), 'READ', $params);
     }
 
 }

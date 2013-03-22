@@ -19,6 +19,8 @@ class StarAcs extends \NRC\ProvisioningApi\Api {
 		'client' => 'NRC\ProvisioningApi\Client\StarAcs',
 	);
 
+    protected $_returnType = 'object';
+
 	public function isCpeOnline($deviceSn) {
 		try {
 			$this->getCpeParameterBySerial($deviceSn, self::globalParam, self::SOURCE_CPE);
@@ -36,13 +38,9 @@ class StarAcs extends \NRC\ProvisioningApi\Api {
 			'value' => $macAddress
 		);
 
-		$response = $this->_client()->request('FTFindDeviceByValue', $params);
+        $response = $this->_request($this->_client(), 'FTFindDeviceByValue', $params);
 
-		if (!$response->success()) {
-			throw new ApiException($response->getStatus());
-		}
-
-		return (int) $response->to('object')->devices->device->serial;
+		return (int) $response->devices->device->serial;
 	}
 
 	public function getCpeParameterBySerial($serial, $parameter, $source = self::SOURCE_CPE) {
@@ -63,13 +61,9 @@ class StarAcs extends \NRC\ProvisioningApi\Api {
 			'arraynames' => (array) $parameters
 		);
 
-		$response = $this->_client()->request('FTGetDeviceParameters', $params);
+        $response = $this->_request($this->_client(), 'FTGetDeviceParameters', $params);
 
-		if (!$response->success()) {
-			throw new ApiException($response->status['message'], $response->status['code']);
-		}
-
-		$results = $response->to('object')->parameters->parameter;
+		$results = $response->parameters->parameter;
 
 		if (count($parameters) == 1) {
 			$tmp = array($results);

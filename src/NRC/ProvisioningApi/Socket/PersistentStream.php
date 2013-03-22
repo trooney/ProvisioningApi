@@ -8,6 +8,7 @@ namespace NRC\ProvisioningApi\Socket;
  * Handle streams where no default EOF character is specified
  *
  * @see ProvisioningApi\Socket\PersistentStream:readUntil()
+ * @codeCoverageIgnore
  */
 class PersistentStream extends \lithium\net\socket\Stream {
 

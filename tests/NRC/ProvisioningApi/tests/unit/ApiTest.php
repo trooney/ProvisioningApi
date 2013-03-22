@@ -12,10 +12,17 @@ use NRC\ProvisioningApi\Api;
 class ApiTest extends \NRC\ProvisioningApi\tests\unit\UnitTestCase
 {
 
-	/**
-	 * @expectedException \NRC\ProvisioningApi\Exceptions\ApiException
-	 */
-    public function estNoClientClass()
+    /**
+     * @expectedException \NRC\ProvisioningApi\Exceptions\ApiException
+     */
+    public function testGetNonExistantClient()
+    {
+        $api = new Api();
+
+        $api->getClient('idontexist');
+    }
+
+    public function testNoClientClass()
     {
 	    $api = new Api();
 
@@ -67,7 +74,8 @@ class ApiTest extends \NRC\ProvisioningApi\tests\unit\UnitTestCase
         $this->assertEquals($expectedB, $api->getClient('bar'));
     }
 
-	public function testApiMethods() {
+	public function testApiMethods()
+    {
 		$expected = $this->getMockForAbstractClass('\NRC\ProvisioningApi\Client');
 
 		$api = new Api(array(
@@ -77,6 +85,21 @@ class ApiTest extends \NRC\ProvisioningApi\tests\unit\UnitTestCase
 		$this->assertInternalType('null', $api->getLastRequest());
 		$this->assertInternalType('null', $api->getLastResponse());
 	}
+
+    public function testReturnType()
+    {
+        $api = new Api(array(
+            'returnType' => 'xml'
+        ));
+
+        $expected = 'xml';
+        $this->assertEquals($expected, $api->getReturnType());
+
+
+        $api->setReturnType('invalid');
+
+        $this->assertEquals($expected, $api->getReturnType());
+    }
 
 
 }

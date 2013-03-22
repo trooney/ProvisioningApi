@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<response version="1.2">
+	<target name="UserAPI" operation="deleteUser">
+		<result />
+	</target>
+</response>

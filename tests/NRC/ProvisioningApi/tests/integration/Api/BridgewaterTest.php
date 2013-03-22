@@ -45,7 +45,7 @@ class BridgewaterTest extends \NRC\ProvisioningApi\tests\integration\Integration
 	}
 
 	public function testCreateUserSuccess() {
-		$api = $this->getApi('Bridgewater', 'get_user_success');
+		$api = $this->getApi('Bridgewater', 'create_user_success');
 
 		$result = $api
 			->createUser(
@@ -57,8 +57,8 @@ class BridgewaterTest extends \NRC\ProvisioningApi\tests\integration\Integration
 				$this->organization
 		);
 
-		$this->assertInternalType('int', $result);
-		$this->assertNotEmpty($result);
+		$this->assertInternalType('object', $result);
+        $this->assertObjectHasAttribute('user', $result);
 	}
 
 	/**
@@ -79,7 +79,7 @@ class BridgewaterTest extends \NRC\ProvisioningApi\tests\integration\Integration
 		$result = $api->getUser($this->username);
 
 		$this->assertInternalType('object', $result);
-		$this->assertObjectHasAttribute('name', $result);
+		$this->assertObjectHasAttribute('user', $result);
 	}
 
 	/**
@@ -116,10 +116,8 @@ class BridgewaterTest extends \NRC\ProvisioningApi\tests\integration\Integration
 	 * @depends testCreateUserSuccess
 	 */
 	public function testDeleteUser() {
-        $api = $this->getApi('Bridgewater', 'get_user_success');
-		$response = $api->deleteUser($this->username, $this->login, $this->domain);
-
-		$this->assertTrue($response);
+        $api = $this->getApi('Bridgewater', 'delete_user_success');
+		$api->deleteUser($this->username, $this->login, $this->domain);
 	}
 
 	public function testGetOrganizationSuccess() {
@@ -128,7 +126,7 @@ class BridgewaterTest extends \NRC\ProvisioningApi\tests\integration\Integration
 		$result = $api->getOrganization($this->organization);
 
 		$this->assertInternalType('object', $result);
-		$this->assertObjectHasAttribute('name', $result);
+		$this->assertObjectHasAttribute('organization', $result);
 	}
 
 	/**

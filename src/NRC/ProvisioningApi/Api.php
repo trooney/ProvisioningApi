@@ -2,6 +2,7 @@
 
 namespace NRC\ProvisioningApi;
 
+use NRC\ProvisioningApi\Client;
 use NRC\ProvisioningApi\Exceptions\ApiException;
 
 /**
@@ -11,11 +12,28 @@ use NRC\ProvisioningApi\Exceptions\ApiException;
  */
 class Api extends \lithium\core\Object {
 
+    const RETURN_RESPONSE = 'response';
+    const RETURN_OBJECT = 'object';
+    const RETURN_ARRAY = 'array';
+    const RETURN_XML = 'xml';
+
 	protected $_classes = array(
         'client' => '\stdClass'
     );
 
-	protected $_clients = array();
+    /**
+     * Hold instantiated clients
+     *
+     * @var array
+     */
+    protected $_clients = array();
+
+    /**
+     * Holds the current return type
+     *
+     * @var string
+     */
+    protected $_returnType;
 
 	public function __construct(array $config = array()) {
 		$defaults = array(
@@ -38,6 +56,16 @@ class Api extends \lithium\core\Object {
                 }
 			}
 		}
+
+        if(isset($config['returnType'])) {
+            $this->setReturnType($config['returnType']);
+
+            unset($config['returnType']);
+        }
+
+        if (!$this->_returnType) {
+            $this->_returnType = self::RETURN_OBJECT;
+        }
 
 		foreach (array_filter($config) as $key => $value) {
 			$this->{$key} = $value;
@@ -94,15 +122,78 @@ class Api extends \lithium\core\Object {
 		return $this->_clients[$name];
 	}
 
-	public function getClient($name = 'default') {
+    /**
+     * Get client
+     *
+     * @param string $name
+     * @return Client
+     */
+    public function getClient($name = 'default') {
 		return $this->_client($name);
 	}
 
-	public function getLastRequest($name = 'default') {
-		return $this->getClient($name)->getLastRequest();
+    /**
+     * Return the last request from specified client
+     *
+     * @param string $client Name fo the client
+     * @return \NRC\ProvisioningApi\Request
+     */
+    public function getLastRequest($client = 'default') {
+		return $this->getClient($client)->getLastRequest();
 	}
 
-	public function getLastResponse($name = 'default') {
-		return $this->getClient($name)->getLastResponse();
+    /**
+     * Return last response from specified client
+     *
+     * @param string $client Name of the client
+     * @return \NRC\ProvisioningApi\Response
+     */
+    public function getLastResponse($client = 'default') {
+		return $this->getClient($client)->getLastResponse();
 	}
+
+    /**
+     * @param Client $client
+     * @param $method
+     * @param $params
+     * @return string|array|object|\NRC\ProvisioningApi\Response
+     * @throws Exceptions\ApiException
+     */
+    protected function _request(Client $client, $method, $params) {
+        $response = $client->request($method, $params);
+
+        if (!$response->success()) {
+            throw new ApiException($response->getStatus());
+        }
+
+        return $response->to($this->_returnType);
+    }
+
+    /**
+     * Set new return type
+     *
+     * @param $type
+     * @see self::_request
+     */
+    public function setReturnType($type) {
+        $types = array(
+            self::RETURN_RESPONSE,
+            self::RETURN_OBJECT,
+            self::RETURN_ARRAY,
+            self::RETURN_XML
+        );
+
+        if ($key = array_search($type, $types, true)) {
+            $this->_returnType = $types[$key];
+        }
+    }
+
+    /**
+     * Get the current return type
+     *
+     * @return string
+     */
+    public function getReturnType() {
+        return $this->_returnType;
+    }
 }

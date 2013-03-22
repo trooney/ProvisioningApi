@@ -43,7 +43,7 @@ class Bridgewater extends \NRC\ProvisioningApi\Api {
 	/**
 	 * @param string $username
 	 * @param string $domain
-	 * @return \StdClass
+	 * @return mixed
 	 * @throws \NRC\ProvisioningApi\Exceptions\ApiException
 	 */
 	public function getUser($username, $domain = null) {
@@ -56,13 +56,7 @@ class Bridgewater extends \NRC\ProvisioningApi\Api {
 			)
 		);
 
-		$response = $this->_client()->request('UserAPI.getUser', $params);
-
-		if (!$response->success()) {
-			throw new ApiException($response->getStatus());
-		}
-
-		return $response->to('object')->user;
+        return $this->_request($this->_client(), 'UserAPI.getUser', $params);
 	}
 
 	/**
@@ -87,7 +81,7 @@ class Bridgewater extends \NRC\ProvisioningApi\Api {
 	 * @param string $profile
 	 * @param string $domain
 	 * @param string $organization
-	 * @return int
+	 * @return mixed
 	 * @throws \NRC\ProvisioningApi\Exceptions\ApiException
 	 */
 	public function createUser($username, $login, $password, $profile, $domain = null, $organization = null) {
@@ -110,45 +104,31 @@ class Bridgewater extends \NRC\ProvisioningApi\Api {
 			)
 		);
 
-		$response = $this->_client()->request('UserAPI.createUser', $params);
-
-		if (!$response->success()) {
-			throw new ApiException($response->getStatus());
-		}
-
-		return (int) $response->to('object')->user->id;
+        return $this->_request($this->_client(), 'UserAPI.createUser', $params);
 	}
 
 	/**
 	 * @param string $username
-	 * @param string $login
 	 * @param string $domain
-	 * @return bool
+	 * @return mixed
 	 * @throws \NRC\ProvisioningApi\Exceptions\ApiException
 	 */
-	public function deleteUser($username, $login, $domain = null) {
+	public function deleteUser($username, $domain = null) {
 		$params = array(
 			'user' => array(
 				'name' => $username,
-				'login-name' => $login,
 				'domain' => array(
 					'name' => ($domain ?: $this->domain)
 				),
 			)
 		);
 
-		$response = $this->_client()->request('UserAPI.deleteUser', $params);
-
-		if (!$response->success()) {
-			throw new ApiException($response->getStatus());
-		}
-
-		return true;
+        return $this->_request($this->_client(), 'UserAPI.deleteUser', $params);
 	}
 
 	/**
 	 * @param string $organization
-	 * @return \StdClass
+	 * @return mixed
 	 * @throws \NRC\ProvisioningApi\Exceptions\ApiException
 	 */
 	public function getOrganization($organization) {
@@ -159,13 +139,7 @@ class Bridgewater extends \NRC\ProvisioningApi\Api {
 			'profile-set' => '',
 		);
 
-		$response = $this->_client()->request('OrganizationAPI.getOrganization', $params);
-
-		if (!$response->success()) {
-			throw new ApiException($response->getStatus());
-		}
-
-		return $response->to('object')->organization;
+        return $this->_request($this->_client(), 'OrganizationAPI.getOrganization', $params);
 	}
 
 	/**
@@ -182,30 +156,14 @@ class Bridgewater extends \NRC\ProvisioningApi\Api {
 		return true;
 	}
 
-	/**
-	 * @param string $profile
-	 * @param string $organization
-	 * @return mixed
-	 * @throws \NRC\ProvisioningApi\Exceptions\ApiException
-	 */
-	public function getUserProfileSet($profile, $organization = null) {
-		$params = array(
-			'user-profile-set' => array(
-				'qualified-name' => '/' . ($organization ? : $this->organization) . '/' . $profile,
-				'profile' => null
-			),
-		);
-
-		$response = $this->_client()->request('UserAPI.getUserProfileSet', $params);
-
-		if (!$response->success()) {
-			throw new ApiException($response->getStatus());
-		}
-
-		return $response->to('object')->{'user-profile-set'};
-	}
-
-	public function updateUserProfile($login, $profile, $organization = null) {
+    /**
+     * @param $login
+     * @param $profile
+     * @param null $organization
+     * @return mixed
+     * @throws \NRC\ProvisioningApi\Exceptions\ApiException
+     */
+    public function updateUserProfile($login, $profile, $organization = null) {
 		$params = array(
 			'user' => array(
 				'login-name' => $login,
@@ -215,13 +173,7 @@ class Bridgewater extends \NRC\ProvisioningApi\Api {
 			)
 		);
 
-		$response = $this->_client()->request('UserAPI.updateUser', $params);
-
-		if (!$response->success()) {
-			throw new ApiException($response->getStatus());
-		}
-
-		return true;
+        return $this->_request($this->_client(), 'UserAPI.updateUser', $params);
 	}
 
 }
