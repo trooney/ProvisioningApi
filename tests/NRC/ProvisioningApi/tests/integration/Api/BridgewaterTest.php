@@ -156,14 +156,6 @@ class BridgewaterTest extends \NRC\ProvisioningApi\tests\integration\Integration
 		$this->assertFalse($result);
 	}
 
-	public function testGetUserProfileSet() {
-        $api = $this->getApi('Bridgewater', 'get_user_profile_set_success');
-		$result = $api->getUserProfileSet($this->organization);
-
-		$this->assertInternalType('object', $result);
-		$this->assertObjectHasAttribute('name', $result);
-	}
-
 	/**
 	 * @param $class
 	 * @param $type

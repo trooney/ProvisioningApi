@@ -7,15 +7,15 @@
          timeoutForSmallTests="5">
 
 	<testsuites>
-		<testsuite name="XmlRemoteIntegrationTests">
-			<directory suffix="Test.php">./tests/NRC/XmlRemote/tests/integration</directory>
+		<testsuite name="ProvisioningApiIntegrationTests">
+			<directory suffix="Test.php">./tests/NRC/ProvisioningApi/tests/integration</directory>
 		</testsuite>
 	</testsuites>
 
 	<logging>
 		<log type="coverage-html"
 		     target="build/coverage"
-		     title="XmlRemote"
+		     title="ProvisioningApi"
 		     charset="UTF-8"
 		     yui="true"
 		     highlight="true"
