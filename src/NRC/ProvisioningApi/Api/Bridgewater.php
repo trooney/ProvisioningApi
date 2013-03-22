@@ -159,15 +159,19 @@ class Bridgewater extends \NRC\ProvisioningApi\Api {
     /**
      * @param string $username
      * @param string $profile
-     * @param string|null $organization
+     * @param string $domain
+     * @param string $organization
      * @return mixed
      * @throws \NRC\ProvisioningApi\Exceptions\ApiException
      */
-    public function updateUserProfile($username, $profile, $organization = null)
+    public function updateUserProfile($username, $profile, $domain = null, $organization = null)
     {
         $params = array(
             'user' => array(
                 'name' => $username,
+                'domain' => array(
+                    'name' => ($domain ? : $this->domain)
+                ),
                 'profile-set' => array(
                     'qualified-name' => '/' . ($organization ? : $this->organization) . '/' . $profile,
                 ),
