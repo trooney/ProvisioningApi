@@ -38,7 +38,7 @@ class StarAcs extends \NRC\ProvisioningApi\Client {
 
 	public function __construct(array $config = array()) {
 		$defaults = array(
-			'path' => '/'
+			'path' => '/ftacsws/ftacsws.asmx?wsdl'
 		);
 
 		$config += $defaults;
