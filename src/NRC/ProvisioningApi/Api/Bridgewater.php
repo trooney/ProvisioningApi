@@ -157,23 +157,24 @@ class Bridgewater extends \NRC\ProvisioningApi\Api {
 	}
 
     /**
-     * @param $login
-     * @param $profile
-     * @param null $organization
+     * @param string $username
+     * @param string $profile
+     * @param string|null $organization
      * @return mixed
      * @throws \NRC\ProvisioningApi\Exceptions\ApiException
      */
-    public function updateUserProfile($login, $profile, $organization = null) {
-		$params = array(
-			'user' => array(
-				'login-name' => $login,
-				'profile-set' => array(
-					'qualified-name' => '/' . ($organization ? : $this->organization) . '/' . $profile,
-				),
-			)
-		);
+    public function updateUserProfile($username, $profile, $organization = null)
+    {
+        $params = array(
+            'user' => array(
+                'name' => $username,
+                'profile-set' => array(
+                    'qualified-name' => '/' . ($organization ? : $this->organization) . '/' . $profile,
+                ),
+            )
+        );
 
         return $this->_request($this->_client(), 'UserAPI.updateUser', $params);
-	}
+    }
 
 }
