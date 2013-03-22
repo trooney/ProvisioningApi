@@ -106,9 +106,7 @@ class FeatureServer extends \NRC\ProvisioningApi\Api {
 
         $response = $this->_client(self::$_CLIENT_HSS)->request('READ', $params);
 
-        print($response->body) . "\n\n";
-
-        return $response;
+        return $response->to('array');
     }
 
 	public function getHssRegistrationData($puidUser) {
@@ -124,7 +122,6 @@ class FeatureServer extends \NRC\ProvisioningApi\Api {
             throw new ApiException($response->getStatus());
         }
 
-        var_dump($response->body);
         return $response->to('array');
 	}
 
@@ -142,8 +139,6 @@ class FeatureServer extends \NRC\ProvisioningApi\Api {
             throw new ApiException($response->getStatus());
         }
 
-        print($response->body) . "\n\n";
-
         return $response->to('array');
     }
 
@@ -160,8 +155,6 @@ class FeatureServer extends \NRC\ProvisioningApi\Api {
         if (!$response->success()) {
             throw new ApiException($response->getStatus());
         }
-
-        print($response->body) . "\n\n";
 
         return $response->to('array');
     }
