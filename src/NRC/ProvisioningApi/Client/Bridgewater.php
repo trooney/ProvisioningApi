@@ -58,10 +58,20 @@ class Bridgewater extends \NRC\ProvisioningApi\Client {
 		$options += $defaults;
 
 		if (!$this->_connection) {
-			$this->_connection = $this->_instance($this->_classes['connection'], $options);
+            $this->_connection = $this->_instance($this->_classes['connection'], $options);
+
+            if (!$this->_connection->open()) {
+                $uri = sprintf(
+                    '%s://%s:%s',
+                    $this->scheme,
+                    $this->host,
+                    $this->port
+                );
+                throw new ClientException("Failed to connect to service at {$uri}");
+            }
 		}
 
-		return (bool) $this->_connection->connection();
+		return (bool) $this->_connection;
 	}
 
 	/**

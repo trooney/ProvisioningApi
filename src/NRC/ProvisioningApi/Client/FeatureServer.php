@@ -71,9 +71,21 @@ class FeatureServer extends \NRC\ProvisioningApi\Client {
 
 		if (!$this->_connection) {
 			$this->_connection = $this->_instance($this->_classes['connection'], $options);
+
+            try {
+                $this->_connection->open();
+            } catch (\Exception $e) {
+                $uri = sprintf(
+                    '%s://%s:%s',
+                    $this->scheme,
+                    $this->host,
+                    $this->port
+                );
+                throw new ClientException("Failed to connect to service at {$uri}");
+            }
 		}
 
-		return (bool)$this->_connection->open();
+		return (bool)$this->_connection;
 	}
 
     /**

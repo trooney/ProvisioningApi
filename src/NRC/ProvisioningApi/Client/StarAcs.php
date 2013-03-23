@@ -99,7 +99,7 @@ class StarAcs extends \NRC\ProvisioningApi\Client {
 			try {
 				$this->_connection = new \SoapClient($uri, $options);
 			} catch (\SoapFault $e) {
-				throw new ClientException($e->getMessage(), $e->getCode());
+				throw new ClientException("Failed to connect to service as {$uri}", $e->getCode());
 			}
 		}
 
