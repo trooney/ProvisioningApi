@@ -73,7 +73,7 @@ class FeatureServer extends \NRC\ProvisioningApi\Client {
 			$this->_connection = $this->_instance($this->_classes['connection'], $options);
 
             try {
-                $this->_connection->open();
+                @$this->_connection->open();
             } catch (\Exception $e) {
                 $uri = sprintf(
                     '%s://%s:%s',

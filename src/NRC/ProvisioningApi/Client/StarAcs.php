@@ -97,9 +97,9 @@ class StarAcs extends \NRC\ProvisioningApi\Client {
 
 		if (!$this->_connection) {
 			try {
-				$this->_connection = new \SoapClient($uri, $options);
+				@$this->_connection = new \SoapClient($uri, $options);
 			} catch (\SoapFault $e) {
-				throw new ClientException("Failed to connect to service as {$uri}", $e->getCode());
+				throw new ClientException("Failed to connect to service at {$uri}", $e->getCode());
 			}
 		}
 
@@ -138,7 +138,7 @@ class StarAcs extends \NRC\ProvisioningApi\Client {
 			$soapResponse = $this->_connection->$method($request->to('array'));
 			$response = $this->_decodeSoapResponse($soapResponse);
 		} catch (\SoapFault $e) {
-			throw new \NRC\ProvisioningApi\Exceptions\ClientException($e->getMessage(), $e->getCode(), $e);
+			throw new ClientException($e->getMessage(), $e->getCode(), $e);
 		}
 
 		if ($this->_xdebugEnabled) {

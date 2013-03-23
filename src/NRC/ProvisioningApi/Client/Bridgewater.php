@@ -60,7 +60,7 @@ class Bridgewater extends \NRC\ProvisioningApi\Client {
 		if (!$this->_connection) {
             $this->_connection = $this->_instance($this->_classes['connection'], $options);
 
-            if (!$this->_connection->open()) {
+            if (!@$this->_connection->open()) {
                 $uri = sprintf(
                     '%s://%s:%s',
                     $this->scheme,
