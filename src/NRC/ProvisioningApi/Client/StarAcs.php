@@ -57,7 +57,7 @@ class StarAcs extends \NRC\ProvisioningApi\Client {
 			'path' => $this->path,
 			'login' => $this->username,
 			'password' => $this->password,
-			'connection_timeout' => $this->timeout,
+			'connection_timeout' => $this->timeout || 30,
 			'keep_alive' => $this->persistent,
 			'cache_wsdl' => WSDL_CACHE_BOTH,
 			'exceptions' => 1,
@@ -81,6 +81,16 @@ class StarAcs extends \NRC\ProvisioningApi\Client {
 			$uri .= '/' . $options['path'];
 		}
 
+        $defaultTimeout = ini_get('default_socket_timeout');
+        $timeout = $options['connection_timeout'];
+
+        // @Note Change php config as SoapClient does not respect 'connection_timeout'
+        // @See http://php.net/manual/en/soapclient.soapclient.php
+        if ($timeout !== $defaultTimeout) {
+            ini_set('default_socket_timeout', $timeout);
+        }
+
+        // @Note xdebug causes fatal error in SoapClient
 		if ($this->_xdebugEnabled) {
 			xdebug_disable();
 		}
@@ -89,13 +99,19 @@ class StarAcs extends \NRC\ProvisioningApi\Client {
 			try {
 				$this->_connection = new \SoapClient($uri, $options);
 			} catch (\SoapFault $e) {
-				throw new ClientException($e->getMessage(), $e->getCode(), $e);
+				throw new ClientException($e->getMessage(), $e->getCode());
 			}
 		}
 
+        // Restore xdebug
 		if ($this->_xdebugEnabled) {
 			xdebug_enable();
 		}
+
+        // Restore timeout
+        if ($timeout !== $defaultTimeout) {
+            ini_set('default_socket_timeout', $defaultTimeout);
+        }
 
 		return (bool) $this->_connection;
 	}
