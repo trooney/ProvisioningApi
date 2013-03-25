@@ -31,6 +31,8 @@ class Bridgewater extends \NRC\ProvisioningApi\Api {
 
 	public function __construct(array $config = array()) {
 		$defaults = array(
+            'port' => 32000,
+            'path' => '/api',
 			'domain' => null,
 			'organization' => null,
 		);
@@ -157,26 +159,40 @@ class Bridgewater extends \NRC\ProvisioningApi\Api {
 	}
 
     /**
+     * Update existing user
+     *
+     * $data is key value pair accepting
+     *  login -> new_login
+     *  profile => new_profile
+     *
      * @param string $username
-     * @param string $profile
+     * @param array $data
      * @param string $domain
      * @param string $organization
      * @return mixed
      * @throws \NRC\ProvisioningApi\Exceptions\ApiException
      */
-    public function updateUserProfile($username, $profile, $domain = null, $organization = null)
+    public function updateUser($username, array $data = array(), $domain = null, $organization = null)
     {
         $params = array(
             'user' => array(
                 'name' => $username,
                 'domain' => array(
                     'name' => ($domain ? : $this->domain)
-                ),
-                'profile-set' => array(
-                    'qualified-name' => '/' . ($organization ? : $this->organization) . '/' . $profile,
-                ),
+                )
             )
         );
+
+        $defaults = array('login' => null, 'profile' => null);
+        $data = array_replace($defaults, $data);
+
+        if ($login = $data['login']) {
+            $params['user']['new-login-name'] = $login;
+        }
+
+        if ($profile = $data['profile']) {
+            $params['user']['profile-set']['qualified-name'] = '/' . ($organization ? : $this->organization) . '/' . $profile;
+        }
 
         return $this->_request($this->_client(), 'UserAPI.updateUser', $params);
     }
