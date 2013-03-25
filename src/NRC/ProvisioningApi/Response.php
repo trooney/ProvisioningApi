@@ -23,10 +23,17 @@ class Response extends Message
         parent::_init();
 
         try {
+            libxml_use_internal_errors(true);
+
             $xml = new SimpleXMLElement($this->body);
+
+            libxml_clear_errors();
+            libxml_use_internal_errors(false);
+
         } catch (\Exception $e) {
+
             $this->status = array(500 => 'Internal Server Error');
-            throw new ResponseException("Malformed XML Response");
+            throw new ResponseException("Malformed XML Response", 500, $e);
         }
 
         $this->data = $this->_decode($xml);
