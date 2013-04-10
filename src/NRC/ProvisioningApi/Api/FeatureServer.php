@@ -101,7 +101,7 @@ class FeatureServer extends \NRC\ProvisioningApi\Api {
 	}
 
     /**
-     * @param $puidUser +14415401234
+     * @param $puidUser sip:+15555555555
      * @return mixed
      */
     public function getHssPublicId($puidUser)
@@ -116,7 +116,7 @@ class FeatureServer extends \NRC\ProvisioningApi\Api {
     }
 
     /**
-     * @param $puidUser sip:+14415401234
+     * @param $puidUser sip:+15555555555
      * @return mixed
      * @throws \NRC\ProvisioningApi\Exceptions\ApiException
      */
@@ -131,7 +131,7 @@ class FeatureServer extends \NRC\ProvisioningApi\Api {
 	}
 
     /**
-     * @param $partyId 4415410786
+     * @param $partyId 5555555555
      * @return mixed
      * @throws \NRC\ProvisioningApi\Exceptions\ApiException
      */
@@ -147,15 +147,15 @@ class FeatureServer extends \NRC\ProvisioningApi\Api {
     }
 
     /**
-     * @param $puidUser sip:+14415401234
+     * @param $pubUserId +15555555555
      * @return mixed
      * @throws \NRC\ProvisioningApi\Exceptions\ApiException
      */
-    public function getFeatureServiceList($puidUser)
+    public function getFeatureServiceList($pubUserId)
     {
         $params = array(
             'ServiceList' => array(
-                'PubUserId' => $puidUser
+                'PubUserId' => $pubUserId
             )
         );
 
