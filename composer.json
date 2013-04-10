@@ -9,9 +9,20 @@
 	],
     "config": {
 		"bin-dir": "bin/",
-        "vendor-dir": "libraries"
+        "vendor-dir": "vendor"
     },
-
+    "extra": {
+        "installer-paths": {
+            "vendor/{$name}": ["UnionOfRAD/lithium"]
+        }
+    },
+    "repositories": [
+        {
+            "vendor-alias": "UnionOfRad",
+            "type": "git",
+            "url": "https://github.com/UnionOfRAD/lithium.git"
+        }
+    ],
     "require": {
         "php": ">=5.3.3",
         "composer/installers": "dev-master",
@@ -20,7 +31,7 @@
 	"autoload":{
 		"psr-0":{
 			"NRC":"src",
-			"lithium":"libraries"
+			"lithium":"vendor"
 		}
 	}
 }
