@@ -34,7 +34,7 @@
 	"autoload":{
 		"psr-0":{
 			"NRC":"src",
-			"lithium":"vendor"
+			"lithium":"libraries"
 		}
 	}
 }
